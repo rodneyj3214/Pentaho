@@ -1,0 +1,10 @@
+<root>
+    <config>
+        <source>Init</source>
+        <server>localhost</server>
+        <database>init</database>
+        <port>5432</port>
+        <user>postgres</user>
+        <password>postgres</password>
+    </config>
+</root>
