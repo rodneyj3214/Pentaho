@@ -1,0 +1,44 @@
+<Schema name="Seguridad" description="Seguridad">
+  <Dimension type="TimeDimension" visible="true" highCardinality="false" name="dim_fecha" caption="Fecha">
+    <Hierarchy name="default" visible="true" hasAll="true" primaryKey="dim_fecha_id">
+      <Table name="dim_fecha">
+      </Table>
+      <Level name="anio" visible="true" column="anio" nameColumn="anio" type="String" uniqueMembers="true" levelType="TimeYears" hideMemberIf="Never">
+      </Level>
+      <Level name="mes" visible="true" column="mes" nameColumn="mes_nombre" type="String" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never" caption="Mes">
+      </Level>
+      <Level name="dia" visible="true" column="dia" nameColumn="dia" type="String" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never" caption="D&#237;a">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="dim_color_piel" caption="Color Piel">
+    <Hierarchy name="default" visible="true" hasAll="true" primaryKey="dim_color_id" caption="dim_color_piel">
+      <Table name="dim_color_piel">
+      </Table>
+      <Level name="nombre" visible="true" column="nombre_color" nameColumn="nombre_color" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never" caption="Color Piel">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="dim_sexo" caption="Sexo">
+    <Hierarchy name="default" visible="true" hasAll="true" primaryKey="dim_sexo_id">
+      <Table name="dim_sexo">
+      </Table>
+      <Level name="sexo" visible="true" column="sexo_codigo" nameColumn="sexo_nombre" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never" caption="Sexo">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="hech_imputado" caption="Imputado" visible="true" cache="true" enabled="true">
+    <Table name="hech_imputado">
+    </Table>
+    <DimensionUsage source="dim_color_piel" name="dim_color_piel" visible="true" foreignKey="dim_color_id" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="dim_fecha" name="dim_fecha" visible="true" foreignKey="dim_fecha_id" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="dim_sexo" name="dim_sexo" visible="true" foreignKey="dim_sexo_id" highCardinality="false">
+    </DimensionUsage>
+    <Measure name="cant_imputado" column="cant_imputados" datatype="Numeric" aggregator="sum" caption="Cantidad Imputados" visible="false">
+    </Measure>
+    <CalculatedMember name="cantidad_imputado5" formula="[Measures].[cant_imputado]*5" dimension="Measures" visible="true">
+    </CalculatedMember>
+  </Cube>
+</Schema>
